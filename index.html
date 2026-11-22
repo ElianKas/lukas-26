@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Psst, Lukas</title>
+<meta name="description" content="Noch nicht gucken.">
+<meta property="og:title" content="Psst, Lukas.">
+<meta property="og:description" content="Noch nicht gucken.">
+<meta name="theme-color" content="#F4F3EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet">
+<style>
+/* VOICE  warm, verspielt, aber ruhig: eine Geburtstagskarte als Editorial
+   IDEA   ein Fotoalbum, das man durchblättert, mit Feuerwerk am Anfang
+   PICTURE Lukas mit Wunderkerzen, groß im ersten Screen
+   COLOUR Papier, Tinte, ein Rot
+   TYPE   Geist + Geist Mono, Noto Sans SC für 生日快乐 */
+:root{color-scheme:light;--bg:#F4F3EF;--ink:#111111;--mute:#5E5E5A;--soft:#3E3E3B;--line:#DEDCD5;--acc:#D8281E;--night:#0D0D0E}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Geist,Inter,system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}a:hover{color:var(--acc)}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
+::selection{background:var(--ink);color:var(--bg)}
+[hidden]{display:none!important}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.mono{font-family:"Geist Mono",ui-monospace,monospace;font-size:13px;letter-spacing:.04em}
+.mute{color:var(--mute)}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;border:1px solid var(--ink);background:transparent;color:var(--ink);font-weight:500;font-size:16px;text-decoration:none}
+.btn.fill{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+.btn.light{background:var(--bg);border-color:var(--bg);color:var(--ink);font-weight:600;min-height:58px;font-size:17px;padding:0 32px}
+.btn svg{width:18px;height:18px;flex:none}
+h1,h2{font-weight:600;letter-spacing:-.05em;margin:0;text-wrap:balance}
+h2{font-size:clamp(44px,6vw,88px);line-height:.95}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--acc);display:inline-block;animation:blink 1.6s ease-in-out infinite}
+
+/* header */
+.top{position:sticky;top:0;z-index:30;background:rgba(244,243,239,.84);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.top nav{display:flex;gap:22px;flex-wrap:wrap}
+.top nav a{text-decoration:none}
+.prog{position:fixed;top:0;left:0;right:0;height:3px;background:var(--acc);transform-origin:left;transform:scaleX(0);z-index:40}
+
+/* countdown */
+#cd{min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
+#cd main{flex:1;display:flex;flex-wrap:wrap;gap:56px;align-items:center;padding-top:56px;padding-bottom:72px}
+#cd .txt{flex:1 1 520px}
+#cd h1{font-size:clamp(52px,7.5vw,112px);line-height:.92}
+.timer{margin-top:52px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:640px}
+.timer div{border-top:1px solid var(--ink);padding-top:16px}
+.timer div:last-child{border-color:var(--acc);color:var(--acc)}
+.timer b{display:block;font-weight:600;font-size:clamp(40px,6vw,84px);line-height:1;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.timer span{display:block;margin-top:10px;color:var(--mute);font-family:"Geist Mono",monospace;font-size:12px}
+.lock{flex:0 1 400px;min-width:260px;position:relative}
+.lock .ph{aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:var(--ink);position:relative}
+.lock img{width:100%;height:100%;object-fit:cover;object-position:68% 40%;filter:blur(26px) saturate(1.2);transform:scale(1.12);animation:breathe 8s ease-in-out infinite}
+.lock .veil{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#fff;background:rgba(17,17,17,.25)}
+.badge{position:absolute;left:-40px;bottom:-32px;width:140px;height:140px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center}
+.badge svg{position:absolute;inset:0;width:100%;height:100%;animation:spin 16s linear infinite}
+.badge b{font-size:46px;letter-spacing:-.04em;font-weight:700}
+.foot{border-top:1px solid var(--line)}
+.foot .wrap{padding-top:24px;padding-bottom:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* hero */
+.hero{padding-top:56px;padding-bottom:56px;min-height:calc(100svh - 61px);display:flex;flex-direction:column;gap:40px}
+.hero .row{flex:1;display:flex;flex-wrap:wrap;gap:56px;align-items:center}
+.hero .txt{flex:1 1 520px}
+.hero h1{font-size:clamp(60px,9vw,140px);line-height:.9}
+.ln-mask{display:block;overflow:hidden;padding-bottom:.06em}
+.up{display:inline-block;opacity:0}
+.play .up{animation:up 1s cubic-bezier(.16,.8,.2,1) both}
+.play .up.d2{animation-delay:.12s}.play .up.d3{animation-delay:.26s}
+.fade{opacity:0}.play .fade{animation:fade 1s ease .45s both}
+.hero .lede{margin:36px 0 0;max-width:440px;font-size:20px;line-height:1.5;color:#2B2B29}
+.hero .act{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+.card{flex:0 1 440px;min-width:270px;position:relative;opacity:0}
+.play .card{animation:pop 1.1s cubic-bezier(.16,.8,.2,1) .2s both}
+.card .ph{aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:var(--ink);box-shadow:0 40px 80px rgba(17,17,17,.22)}
+.card .ph img{width:100%;height:100%;object-fit:cover;object-position:68% 40%}
+.tag{position:absolute;right:-12px;top:28px;padding:8px 14px;border-radius:999px;background:var(--ink);color:var(--bg);transform:rotate(6deg)}
+.ticker{overflow:hidden;border-block:1px solid var(--ink);padding:18px 0}
+.ticker div{display:flex;width:max-content;animation:marquee 26s linear infinite;font-weight:600;font-size:28px;letter-spacing:-.02em;white-space:nowrap}
+.ticker span{padding-right:40px}.ticker i{font-style:normal;color:var(--acc)}
+
+/* big image */
+.big{padding-top:80px}
+.big .frame{height:88vh;min-height:440px;overflow:hidden}
+.big img{width:100%;height:100%;object-fit:cover;object-position:50% 38%}
+.big p{margin-top:16px}
+
+/* dark chapters */
+.dark{background:var(--ink);color:var(--bg);padding:160px 0}
+.dark .mute{color:#A8A69E}
+.dark .lead{color:#CFCDC6;font-size:18px;line-height:1.6}
+.head{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-end;margin-bottom:80px}
+.head .mono{margin:0 0 16px}
+.food{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px}
+.food .a{grid-column:span 5}.food .b{grid-column:span 7;display:flex;flex-direction:column;gap:24px}
+.food figure,.hs figure{margin:0}
+.food .im{overflow:hidden;border-radius:6px}
+.food img{width:100%;height:100%;object-fit:cover}
+figcaption{margin-top:12px;font-family:"Geist Mono",monospace;font-size:13px;color:var(--mute)}
+.dark figcaption{color:#A8A69E}
+.zh{margin-top:140px;text-align:center}
+.zh b{display:block;font-family:"Noto Sans SC",sans-serif;font-weight:700;font-size:clamp(76px,17vw,240px);line-height:1;color:var(--acc)}
+.zh p{margin:24px 0 0;color:#CFCDC6}
+
+/* horizontal gallery */
+.hs-sticky{overflow-x:auto;scroll-snap-type:x mandatory;padding:120px 0 24px}
+.hs-track{display:flex;gap:24px;width:max-content;padding:0 max(24px,calc((100vw - 1152px)/2))}
+.hs-track figure{scroll-snap-align:center;flex:none}
+.hs-track img{height:min(52vh,520px);width:auto;border-radius:6px}
+.hs .head{margin-bottom:40px}
+
+/* finale */
+#finale{padding-bottom:120px}
+#finale h2{font-size:clamp(64px,12vw,180px);line-height:.9}
+#finale h2 span{color:var(--acc)}
+.cheers{position:relative;height:clamp(180px,26vw,260px);margin:56px 0 8px;max-width:640px}
+.beer{position:absolute;bottom:0;font-size:clamp(110px,17vw,190px);line-height:1;opacity:0;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.beer.l{right:50%;transform-origin:85% 90%}
+.beer.r{left:50%;transform-origin:15% 90%}
+.beer.l span{display:inline-block;transform:scaleX(-1)}
+.cheers.idle .beer.l{opacity:1;transform:translateX(-14%) rotate(-6deg)}
+.cheers.idle .beer.r{opacity:1;transform:translateX(14%) rotate(6deg)}
+.cheers.go .beer.l{animation:beerL 1.5s cubic-bezier(.3,.7,.2,1) both}
+.cheers.go .beer.r{animation:beerR 1.5s cubic-bezier(.3,.7,.2,1) both}
+.foam{position:absolute;left:50%;bottom:62%;width:0;height:0}
+.foam i{position:absolute;width:14px;height:14px;margin:-7px;border-radius:50%;background:#FFF6DA;opacity:0}
+.foam i:nth-child(odd){background:#F2C14E;width:10px;height:10px;margin:-5px}
+.cheers.go .foam i{animation:foam .9s cubic-bezier(.2,.7,.3,1) .62s both}
+.flash{position:absolute;left:50%;bottom:66%;width:120px;height:120px;margin:0 0 -60px -60px;opacity:0;color:#F2C14E}
+.cheers.go .flash{animation:flash .5s ease-out .6s both}
+.toast-row{display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+#toastMsg{margin:0;color:#CFCDC6;min-height:1.5em}
+.letter{margin-top:120px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;border-top:1px solid #3A3A37;padding-top:48px}
+.letter .mono{grid-column:span 3;margin:0}
+.letter div{grid-column:span 9}
+.letter p{margin:0 0 24px;font-size:clamp(21px,2.3vw,30px);line-height:1.42;letter-spacing:-.015em}
+.letter p.c{color:#CFCDC6}
+.dark-foot{background:var(--ink);color:#A8A69E;border-top:1px solid #2A2A28}
+.dark-foot .wrap{padding-top:28px;padding-bottom:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* show overlay */
+.show{position:fixed;inset:0;z-index:90;background:var(--night);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .7s ease}
+.show.on{opacity:1;pointer-events:auto}
+.show.soft{background:rgba(13,13,14,.86)}
+#fw{position:absolute;inset:0}
+.show-t{position:relative;z-index:2;margin:0;padding:0 24px;text-align:center;color:#fff;font-weight:600;letter-spacing:-.05em;font-size:clamp(48px,9vw,128px);line-height:.92;opacity:0;transform:translateY(20px);transition:opacity .9s ease .5s,transform .9s ease .5s;text-wrap:balance}
+.show-t small{display:block;margin-top:24px;font:500 15px "Geist Mono",monospace;letter-spacing:.04em;color:#CFCDC6}
+.show.on.txt .show-t{opacity:1;transform:none}
+.skip{position:absolute;z-index:3;right:20px;bottom:20px;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid #5A5A57;background:transparent;color:#CFCDC6;font:500 13px "Geist Mono",monospace}
+
+/* scroll-driven motion */
+@supports (animation-timeline:view()){
+.rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+.clip{animation:clip linear both;animation-timeline:view();animation-range:entry 0% cover 50%}
+.zoom{animation:zoom linear both;animation-timeline:view();animation-range:entry 0% exit 0%}
+.prog{animation:prog linear both;animation-timeline:scroll(root)}
+.hs{height:340vh;view-timeline:--hs block}
+.hs-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:60px 0 0}
+.hs-track{animation:hs linear both;animation-timeline:--hs;animation-range:contain 0% contain 100%}
+}
+.io .rv{opacity:0;transform:translateY(48px);transition:opacity .9s ease,transform .9s cubic-bezier(.16,.8,.2,1)}
+.io .clip{clip-path:inset(10% 24% 10% 24% round 28px);transition:clip-path 1.2s cubic-bezier(.16,.8,.2,1)}
+.io .rv.in{opacity:1;transform:none}.io .clip.in{clip-path:inset(0 0 0 0 round 0)}
+
+@keyframes up{from{opacity:0;transform:translateY(60%)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:translateY(40px) rotate(4deg) scale(.94)}to{opacity:1;transform:rotate(-2deg)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{0%,100%{transform:scale(1.08)}50%{transform:scale(1.15)}}
+@keyframes marquee{to{transform:translateX(-50%)}}
+@keyframes rv{from{opacity:0;transform:translateY(48px)}to{opacity:1;transform:none}}
+@keyframes clip{from{clip-path:inset(10% 24% 10% 24% round 28px)}to{clip-path:inset(0 0 0 0 round 0)}}
+@keyframes zoom{from{transform:scale(1.18)}to{transform:scale(1)}}
+@keyframes prog{to{transform:scaleX(1)}}
+@keyframes hs{to{transform:translateX(calc(-100% + 100vw))}}
+@keyframes beerL{0%{opacity:0;transform:translateX(-160%) rotate(-28deg)}18%{opacity:1}40%{transform:translateX(-20%) rotate(-12deg)}52%{transform:translateX(12%) rotate(24deg)}60%{transform:translateX(2%) rotate(12deg)}74%{transform:translateX(7%) rotate(18deg)}100%{opacity:1;transform:translateX(5%) rotate(14deg)}}
+@keyframes beerR{0%{opacity:0;transform:translateX(160%) rotate(28deg)}18%{opacity:1}40%{transform:translateX(20%) rotate(12deg)}52%{transform:translateX(-12%) rotate(-24deg)}60%{transform:translateX(-2%) rotate(-12deg)}74%{transform:translateX(-7%) rotate(-18deg)}100%{opacity:1;transform:translateX(-5%) rotate(-14deg)}}
+@keyframes foam{0%{opacity:1;transform:translate(0,0) scale(.4)}70%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1)}}
+@keyframes flash{0%{opacity:0;transform:scale(.3) rotate(0)}40%{opacity:1}100%{opacity:0;transform:scale(1.3) rotate(25deg)}}
+
+@media (max-width:760px){
+.top nav{display:none}
+.food .a,.food .b{grid-column:span 12}
+.letter .mono,.letter div{grid-column:span 12}
+.badge{left:-12px;bottom:-28px;width:116px;height:116px}.badge b{font-size:38px}
+.timer{gap:8px}
+.ticker div{font-size:22px}
+.dark{padding:110px 0}
+}
+@media (prefers-reduced-motion:reduce){
+*,*::before,*::after{animation:none!important;transition:none!important}
+.up,.fade,.card{opacity:1!important}
+.hs{height:auto!important}.hs-sticky{position:static!important;height:auto!important;overflow-x:auto!important}
+.io .rv,.io .clip{opacity:1;transform:none;clip-path:none}
+.cheers .beer{opacity:1}.cheers .beer.l{transform:translateX(5%) rotate(14deg)}.cheers .beer.r{transform:translateX(-5%) rotate(-14deg)}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ COUNTDOWN ============ -->
+<div id="cd" hidden>
+<header class="foot" style="border-top:0;border-bottom:1px solid var(--line)">
+<div class="wrap mono" style="height:60px;display:flex;align-items:center;justify-content:space-between;padding-top:0;padding-bottom:0">
+<span style="display:inline-flex;align-items:center;gap:10px"><span class="dot" aria-hidden="true"></span>LUKAS / 26</span>
+<span>STRENG GEHEIM</span>
+</div>
+</header>
+<main class="wrap">
+<div class="txt">
+<p class="mono mute" style="margin:0 0 28px">Hier entsteht gerade etwas</p>
+<h1>Psst, Lukas.<br>Noch nicht <span style="color:var(--acc)">gucken.</span></h1>
+<div class="timer" role="timer" aria-label="Countdown bis zur Überraschung">
+<div><b id="cdD">00</b><span>TAGE</span></div>
+<div><b id="cdH">00</b><span>STUNDEN</span></div>
+<div><b id="cdM">00</b><span>MINUTEN</span></div>
+<div><b id="cdS">00</b><span>SEKUNDEN</span></div>
+</div>
+<p style="margin:40px 0 0;max-width:480px;font-size:19px;color:#2B2B29">Komm am <strong id="cdDate" style="font-weight:600">Montag, 23. November, um 0:00 Uhr</strong> wieder. Bis dahin: Link speichern, nicht spoilern lassen.</p>
+</div>
+<div class="lock">
+<div class="ph">
+<img src="img/sparkler.jpg" alt="">
+<div class="veil">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+<span class="mono">VORSCHAU GESPERRT</span>
+</div>
+</div>
+<div class="badge" aria-hidden="true">
+<svg viewBox="0 0 140 140"><defs><path id="r1" d="M70,70 m-53,0 a53,53 0 1,1 106,0 a53,53 0 1,1 -106,0"/></defs><text fill="#fff" font-family="Geist Mono, monospace" font-size="11"><textPath href="#r1" textLength="328" lengthAdjust="spacing">BALD · SOON · 马上 · BALD · SOON · 马上 ·</textPath></text></svg>
+<b>26</b>
+</div>
+</div>
+</main>
+<footer class="foot"><div class="wrap mono mute"><span>Handgemacht von Elian, 2026</span><span lang="zh-Hans">生日快乐 · 26</span></div></footer>
+</div>
+
+<!-- ============ GEBURTSTAG ============ -->
+<div id="party" hidden>
+<div class="prog" aria-hidden="true"></div>
+<header class="top">
+<div class="wrap mono">
+<span style="display:inline-flex;align-items:center;gap:10px"><span class="dot" aria-hidden="true"></span>LUKAS / 26</span>
+<nav aria-label="Kapitel"><a href="#zhongcan">中餐</a><a href="#fotos">Fotos</a><a href="#finale">Anstoßen</a></nav>
+</div>
+</header>
+
+<section class="wrap hero">
+<p class="mono mute fade" style="margin:0">Heute wird gefeiert</p>
+<div class="row">
+<div class="txt">
+<h1><span class="ln-mask"><span class="up">Happy</span></span><span class="ln-mask"><span class="up d2">Birthday,</span></span><span class="ln-mask"><span class="up d3" style="color:var(--acc)">Lukas!</span></span></h1>
+<p class="lede fade">26 Jahre – das gehört gefeiert. Mit Konfetti, Feuerwerk und ein paar Fotos, die du vielleicht lieber nicht wiedersehen wolltest.</p>
+<div class="act fade">
+<button type="button" class="btn fill" id="partyBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-12 8 8-12 4z"/><path d="M14 4l1 2M19 9l2 1M17 3l-1 3M21 7l-3 1"/></svg>Konfetti &amp; Feuerwerk</button>
+<a class="btn" href="#bild">Weiterscrollen<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+</div>
+</div>
+<div class="card">
+<div class="ph"><img src="img/sparkler.jpg" alt="Lukas mit Leuchtbrille und Kapuze nachts auf der Straße, daneben sprühen Wunderkerzen"></div>
+<div class="badge" aria-hidden="true">
+<svg viewBox="0 0 140 140"><defs><path id="r2" d="M70,70 m-53,0 a53,53 0 1,1 106,0 a53,53 0 1,1 -106,0"/></defs><text fill="#fff" font-family="Geist Mono, monospace" font-size="11"><textPath href="#r2" textLength="328" lengthAdjust="spacing">HAPPY BIRTHDAY · 生日快乐 · 26 ·</textPath></text></svg>
+<b>26</b>
+</div>
+<div class="tag mono" aria-hidden="true">Geburtstagskind</div>
+</div>
+</div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div>
+<span>Happy Birthday, Lukas <i>✶</i> 生日快乐 <i>✶</i> 26 <i>✶</i> Happy Birthday, Lukas <i>✶</i> 生日快乐 <i>✶</i> 26 <i>✶</i></span>
+<span>Happy Birthday, Lukas <i>✶</i> 生日快乐 <i>✶</i> 26 <i>✶</i> Happy Birthday, Lukas <i>✶</i> 生日快乐 <i>✶</i> 26 <i>✶</i></span>
+</div></div>
+
+<section id="bild" class="big">
+<div class="frame clip"><img class="zoom" src="img/night.jpg" alt="Lukas und ein Freund nachts vor einem Laden, Arm in Arm" loading="lazy"></div>
+<p class="wrap mono mute">Irgendwann nachts, irgendwo. Wie so oft.</p>
+</section>
+
+<section id="zhongcan" class="dark" style="margin-top:160px">
+<div class="wrap">
+<div class="head rv">
+<div style="flex:1 1 520px"><p class="mono mute">中餐</p><h2>Liebe geht<br>durch den Magen.</h2></div>
+<p class="lead" style="flex:0 1 380px;margin:0">Chinesische Küche, chinesische Freunde, eine chinesische Freundin – und seit Neuestem auch Chinesisch auf Duolingo. Hotpot ist bei ihm keine Mahlzeit, sondern ein Abendprogramm.</p>
+</div>
+<div class="food">
+<figure class="a rv"><div class="im" style="aspect-ratio:3/4"><img class="zoom" src="img/noodles.jpg" alt="Lukas mit Daumen hoch vor einer Schüssel Nudelsuppe" loading="lazy"></div><figcaption>Offizielle Bewertung: ★★★★★</figcaption></figure>
+<div class="b">
+<figure class="rv"><div class="im" style="aspect-ratio:4/3"><img class="zoom" src="img/hotpot.jpg" alt="Lukas und ein Freund lachend am Küchentisch beim Hotpot" loading="lazy"></div><figcaption>Hotpot-Abend. Mit Erdinger, versteht sich.</figcaption></figure>
+<figure class="rv"><div class="im" style="aspect-ratio:16/9"><img class="zoom" src="img/restaurant.jpg" alt="Lukas am Restauranttisch mit Stäbchen vor mehreren chinesischen Gerichten" style="object-position:50% 40%" loading="lazy"></div><figcaption>Bestellt wird immer für eine Person mehr.</figcaption></figure>
+</div>
+</div>
+<div class="zh rv"><b lang="zh-Hans">生日快乐</b><p class="mono" style="font-size:15px">shēngrì kuàilè — Alles Gute zum Geburtstag. Gut für die Duolingo-Streak.</p></div>
+</div>
+</section>
+
+<section id="fotos" class="hs">
+<div class="hs-sticky">
+<div class="wrap head" style="width:100%">
+<div><p class="mono mute">Beweisfotos</p><h2>Das Archiv.</h2></div>
+<p class="mono mute" style="margin:0">Weiterscrollen →</p>
+</div>
+<div class="hs-track">
+<figure><img src="img/suit.jpg" alt="Spiegel-Selfie von Lukas in Weste, Fliege und Anzughose" loading="lazy"><figcaption>Anzug: sitzt. Socken: mutig.</figcaption></figure>
+<figure><img src="img/lamp.jpg" alt="Lukas zeichnet am Tisch und trägt einen Lampenschirm als Hut" loading="lazy"><figcaption>Designer bei der Arbeit. Lampenschirm optional.</figcaption></figure>
+<figure><img src="img/booth.jpg" alt="Fotoautomaten-Bild mit drei Freunden, die von oben in die Kamera schauen" loading="lazy"><figcaption>Fotoautomat. Perspektive: experimentell.</figcaption></figure>
+<figure><img src="img/thumbs.jpg" alt="Lukas lacht und zeigt zwei Daumen hoch in einem Restaurant" loading="lazy"><figcaption>Zwei Daumen. Mindestens.</figcaption></figure>
+<figure><img src="img/bar.jpg" alt="Lukas mit großen Augen und Glas in der Hand in einer pink beleuchteten Bar" loading="lazy"><figcaption>Abends mit Freunden. Das Licht war schuld.</figcaption></figure>
+<figure><img src="img/couch.jpg" alt="Lukas sitzt auf einem Sofa vor einem Hauseingang und schaut in die Kamera" loading="lazy"><figcaption>Feierabend, Open-Air-Edition.</figcaption></figure>
+<figure><img src="img/closeup.jpg" alt="Versehentliches Nahaufnahme-Selfie von Lukas" loading="lazy"><figcaption>Wenn die Frontkamera an ist.</figcaption></figure>
+</div>
+</div>
+</section>
+
+<section id="finale" class="dark">
+<div class="wrap">
+<h2 class="rv">Auf dich,<br><span>Lukas.</span></h2>
+<div class="cheers idle" id="cheers" aria-hidden="true">
+<div class="beer l"><span>🍺</span></div>
+<div class="beer r">🍺</div>
+<svg class="flash" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M60 8v22M60 90v22M8 60h22M90 60h22M23 23l15 15M82 82l15 15M97 23L82 38M38 82L23 97"/></svg>
+<div class="foam"><i style="--x:-90px;--y:-120px"></i><i style="--x:-50px;--y:-160px"></i><i style="--x:-10px;--y:-190px"></i><i style="--x:30px;--y:-170px"></i><i style="--x:80px;--y:-130px"></i><i style="--x:110px;--y:-70px"></i><i style="--x:-120px;--y:-60px"></i><i style="--x:0px;--y:-110px"></i><i style="--x:60px;--y:-200px"></i><i style="--x:-70px;--y:-210px"></i></div>
+</div>
+<div class="toast-row">
+<button type="button" class="btn light" id="toastBtn">Anstoßen</button>
+<p id="toastMsg" class="mono" aria-live="polite"></p>
+</div>
+<div class="letter rv">
+<p class="mono mute">Ein paar Worte</p>
+<div>
+<p>Lieber Lukas,</p>
+<p class="c">26 – und du bist immer noch der, der beim Hotpot als Letzter den Löffel weglegt. Danke für die Jahre bei ApeSolute, die langen Abende mit zu viel Quatschen und die VR-Runden. Auf ein Jahr voller guter Designs, gutem Essen und noch mehr gemeinsamer Projekte.</p>
+<p>Alles Gute – Elian</p>
+</div>
+</div>
+</div>
+</section>
+<footer class="dark-foot"><div class="wrap mono"><span>Handgemacht von Elian, 2026</span><span lang="zh-Hans">生日快乐 · 26</span></div></footer>
+</div>
+
+<!-- ============ FEUERWERK-SHOW ============ -->
+<div class="show" id="show" aria-hidden="true">
+<div id="fw"></div>
+<p class="show-t">Happy Birthday,<br>Lukas!<small>生日快乐 · 26</small></p>
+<button type="button" class="skip" id="skip">Überspringen</button>
+</div>
+
+<script src="vendor/confetti.js"></script>
+<script src="vendor/fireworks.js"></script>
+<script>
+{
+  // Geburtstag: Montag, 23. November 2026, 0:00 Uhr deutscher Zeit
+  const TARGET = new Date('2026-11-23T00:00:00+01:00').getTime();
+  const preview = location.hash === '#vorschau';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (id) => document.getElementById(id);
+  const cd = $('cd'), party = $('party'), show = $('show');
+  const COLORS = ['#D8281E', '#111111', '#F2C14E', '#FFFFFF', '#D8281E'];
+
+  /* ---------- Konfetti ---------- */
+  const confettiBurst = () => {
+    if (typeof confetti !== 'function') return;
+    const base = { colors: COLORS, zIndex: 100, disableForReducedMotion: true };
+    const shot = (ratio, opts) => confetti({ ...base, particleCount: Math.floor(220 * ratio), ...opts });
+    shot(.25, { spread: 26, startVelocity: 55, origin: { y: .75 } });
+    shot(.2, { spread: 60, origin: { y: .75 } });
+    shot(.35, { spread: 100, decay: .91, scalar: .9, origin: { y: .75 } });
+    shot(.1, { spread: 120, startVelocity: 25, decay: .92, scalar: 1.3, origin: { y: .75 } });
+    shot(.1, { spread: 120, startVelocity: 45, origin: { y: .75 } });
+    const end = Date.now() + 1600;
+    (function side() {
+      confetti({ ...base, particleCount: 4, angle: 60, spread: 60, origin: { x: 0, y: .8 } });
+      confetti({ ...base, particleCount: 4, angle: 120, spread: 60, origin: { x: 1, y: .8 } });
+      if (Date.now() < end) requestAnimationFrame(side);
+    })();
+    setTimeout(() => confetti({ ...base, particleCount: 40, spread: 360, startVelocity: 28, gravity: .6, ticks: 260, shapes: ['star'], scalar: 1.2, colors: ['#F2C14E', '#D8281E', '#FFFFFF'], origin: { x: .5, y: .3 } }), 500);
+  };
+
+  /* ---------- Feuerwerk ---------- */
+  let fw = null, showTimer = null;
+  const startFireworks = () => {
+    if (!window.Fireworks || !Fireworks.Fireworks) return;
+    fw = new Fireworks.Fireworks($('fw'), {
+      autoresize: true, opacity: .5, acceleration: 1.03, friction: .97, gravity: 1.5,
+      particles: 110, traceLength: 3, traceSpeed: 10, explosion: 7, intensity: 40,
+      flickering: 50, lineStyle: 'round', hue: { min: 0, max: 360 },
+      delay: { min: 18, max: 34 }, rocketsPoint: { min: 15, max: 85 },
+      lineWidth: { explosion: { min: 1, max: 4 }, trace: { min: 1, max: 2 } },
+      brightness: { min: 55, max: 85 }, decay: { min: .015, max: .03 },
+      mouse: { click: false, move: false, max: 1 }, sound: { enabled: false }
+    });
+    fw.start();
+    // erste Raketen sofort zünden, danach läuft das Feuerwerk von selbst weiter
+    if (typeof fw.createTrace === 'function') for (let i = 0; i < 4; i++) fw.createTrace();
+  };
+  const endShow = () => {
+    clearTimeout(showTimer);
+    if (!show.classList.contains('on')) return;
+    show.classList.remove('on', 'txt');
+    show.setAttribute('aria-hidden', 'true');
+    document.body.classList.add('play');
+    confettiBurst();
+    setTimeout(() => { if (fw) { fw.stop(true); fw = null; } show.classList.remove('soft'); }, 750);
+  };
+  const celebrate = (withText) => {
+    if (reduce) { document.body.classList.add('play'); confettiBurst(); return; }
+    if (fw) { fw.stop(true); fw = null; }
+    show.classList.toggle('soft', !withText);
+    show.classList.add('on');
+    if (withText) show.classList.add('txt');
+    show.setAttribute('aria-hidden', 'false');
+    startFireworks();
+    showTimer = setTimeout(endShow, withText ? 4200 : 2800);
+  };
+  $('skip').addEventListener('click', endShow);
+  show.addEventListener('click', (e) => { if (e.target === show || e.target.closest('#fw')) endShow(); });
+  $('partyBtn').addEventListener('click', () => celebrate(false));
+
+  /* ---------- Anstoßen ---------- */
+  let toasts = 0;
+  const cheers = $('cheers');
+  $('toastBtn').addEventListener('click', () => {
+    toasts += 1;
+    cheers.classList.remove('idle', 'go');
+    void cheers.offsetWidth;
+    cheers.classList.add('go');
+    const msg = $('toastMsg');
+    msg.textContent = '';
+    setTimeout(() => {
+      msg.textContent = toasts === 1 ? '干杯! (gānbēi) – Prost, Lukas!' : toasts + '× angestoßen. Langsam, Lukas.';
+      if (navigator.vibrate) { try { navigator.vibrate(40); } catch (e) {} }
+    }, 700);
+  });
+
+  /* ---------- Scroll-Effekte ohne Scroll-Timeline (z. B. Firefox) ---------- */
+  const setupFallback = () => {
+    if (window.CSS && CSS.supports('animation-timeline: view()')) return;
+    document.documentElement.classList.add('io');
+    const io = new IntersectionObserver((entries) => {
+      for (const en of entries) if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    }, { threshold: .15 });
+    document.querySelectorAll('.rv, .clip').forEach((el) => io.observe(el));
+    const bar = document.querySelector('.prog');
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0) + ')';
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  };
+
+  /* ---------- Ansicht wählen ---------- */
+  const openParty = () => {
+    cd.hidden = true;
+    party.hidden = false;
+    document.title = 'Happy Birthday, Lukas!';
+    scrollTo(0, 0);
+    setupFallback();
+    celebrate(true);
+  };
+
+  const pad = (n) => String(n).padStart(2, '0');
+  let iv = null;
+  const tick = () => {
+    const left = Math.max(0, Math.floor((TARGET - Date.now()) / 1000));
+    $('cdD').textContent = pad(Math.floor(left / 86400));
+    $('cdH').textContent = pad(Math.floor(left % 86400 / 3600));
+    $('cdM').textContent = pad(Math.floor(left % 3600 / 60));
+    $('cdS').textContent = pad(left % 60);
+    if (left === 0) { clearInterval(iv); setTimeout(openParty, 600); }
+  };
+
+  if (preview || Date.now() >= TARGET) {
+    openParty();
+  } else {
+    cd.hidden = false;
+    tick();
+    iv = setInterval(tick, 1000);
+  }
+  addEventListener('hashchange', () => { if (location.hash === '#vorschau' && party.hidden) { clearInterval(iv); openParty(); } });
+}
+</script>
+</body>
+</html>
